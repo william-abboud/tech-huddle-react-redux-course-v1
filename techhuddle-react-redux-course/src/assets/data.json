@@ -1,0 +1,17 @@
+[
+  {
+    "artist": "Eminem",
+    "photo": "./assets/images/eminem-profile.jpg",
+    "aliases": ["Marshall Mathers", "Slim Shady"],
+    "albums": [
+      {
+        "name": "Revival",
+        "year": "2017"
+      },
+      {
+        "name": "The Marshall Mathers LP2 ",
+        "year": "2013"
+      }
+    ]
+  }
+]

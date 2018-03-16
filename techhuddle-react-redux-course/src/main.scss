@@ -1,4 +1,6 @@
 @import '~normalize.css/normalize.css';
+@import './sass/avatar.scss';
+@import './sass/artist-card.scss';
 
 $site-bg-color: navy;
 
@@ -10,15 +12,4 @@ $site-bg-color: navy;
 
 html {
   font-family: "Montserrat-regular", sans-serif, Arial;
-}
-
-body {
-  display: flex;
-  align-items: center;
-  flex-flow: row nowrap;
-  padding: 10px;
-}
-
-h2 {
-  color: lime;
 }

@@ -1,0 +1,10 @@
+.artist-card {
+  width: 200px;
+  display: flex;
+  flex-flow: column;
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}

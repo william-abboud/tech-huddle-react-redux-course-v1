@@ -2,11 +2,13 @@ import './main.scss';
 import "babel-polyfill";
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ArtistCard from './js/components/ArtistCard';
+import data from './assets/data.json';
+import eminem from './assets/images/eminem-profile.jpg';
 
-function MyComponent() {
-  return <div>Hello World</div>;
-}
+const artist = data[0];
 
 ReactDOM.render(
-  <MyComponent />, document.getElementById("root")
+  <ArtistCard artist={artist} />
+  ,document.getElementById("root")
 );

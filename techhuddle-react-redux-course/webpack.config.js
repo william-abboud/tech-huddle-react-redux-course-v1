@@ -131,7 +131,7 @@ module.exports = env => {
             {
               loader: "file-loader",
               options: {
-                name: "[path][name].[hash:8].[ext]",
+                name: "[path][name].[ext]",
                 context: "src"
               },
             },
