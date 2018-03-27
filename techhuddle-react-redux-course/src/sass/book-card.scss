@@ -1,3 +1,26 @@
-.book-card {
+.book-cards {
+  display: flex;
+}
 
+.book-card {
+  display: flex;
+  flex-flow: column nowrap;
+  border: 2px solid;
+  border-radius: 10px;
+  max-width: 300px;
+  padding: 10px;
+  box-shadow: 0 0 2px #000;
+
+  .title {
+    font-size: 20px;
+    text-align: center;
+    text-decoration: underline;
+  }
+
+  .cover {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+    margin-top: auto;
+  }
 }

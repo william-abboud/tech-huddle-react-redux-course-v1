@@ -3,15 +3,42 @@ import "babel-polyfill";
 import "whatwg-fetch";
 import React from 'react';
 import ReactDOM from 'react-dom';
-import data from './assets/data.json';
-import eminem from './assets/images/eminem-profile.jpg';
 import BookCards from './js/components/BookCards';
+import booksData from './assets/books-data.json';
 
-const artist = data[0];
+const superman = {
+  title: "Superman",
+  isbn: "0785339434"
+};
 
-const titles = ["The adventures of Tom Sawyer", "Tom Sawyer abroad"];
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.loadMore = this.loadMore.bind(this);
+    this.state = {
+      books: booksData,
+      booksForLater: []
+    };
+  }
+
+  loadMore() {
+    this.setState({
+      booksForLater: [superman]
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <BookCards books={this.state.books} lazyLoadedBooks={this.state.booksForLater} />
+        <button onClick={this.loadMore}>Load more</button>
+      </div>
+    );
+  }
+}
 
 ReactDOM.render(
-  <BookCards titles={titles} />
-  ,document.getElementById("root")
+  <App />,
+  document.getElementById("root")
 );
