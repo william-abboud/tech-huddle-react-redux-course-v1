@@ -109,7 +109,8 @@ module.exports = env => {
     },
     output: {
       filename: isProduction ? "[name][chunkhash:8].js" : "[name].js",
-      path: PATHS.build
+      path: PATHS.build,
+      publicPath: '/',
     },
     resolve: {
       extensions: ['.js', '.jsx'],
@@ -168,6 +169,7 @@ module.exports = env => {
       stats: "errors-only",
       host: "127.0.0.1", // access server externally
       port: 4043,
+      historyApiFallback: true,
     },
     devtool: isProduction ? "source-map" : "cheap-module-source-map",
     plugins

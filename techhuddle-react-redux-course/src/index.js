@@ -3,36 +3,20 @@ import "babel-polyfill";
 import "whatwg-fetch";
 import React from 'react';
 import ReactDOM from 'react-dom';
-import BookCards from './js/components/BookCards';
-import booksData from './assets/books-data.json';
-
-const superman = {
-  title: "Superman",
-  isbn: "0785339434"
-};
+import HomeView from './js/views/HomeView';
+import BooksView from './js/views/BooksView';
+import RegisterView from './js/views/RegisterView';
+import Header from './js/common/Header';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-
-    this.loadMore = this.loadMore.bind(this);
-    this.state = {
-      books: booksData,
-      booksForLater: []
-    };
-  }
-
-  loadMore() {
-    this.setState({
-      booksForLater: [superman]
-    });
   }
 
   render() {
     return (
       <div>
-        <BookCards books={this.state.books} lazyLoadedBooks={this.state.booksForLater} />
-        <button onClick={this.loadMore}>Load more</button>
+        <Header />
       </div>
     );
   }

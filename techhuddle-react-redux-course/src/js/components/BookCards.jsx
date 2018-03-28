@@ -1,5 +1,7 @@
 import React from 'react';
 import { string, number, array, oneOf } from 'prop-types';
+import { getBook, getBooks } from '../services/books-service';
+import booksData from '../../assets/books-data.json';
 
 class BookCards extends React.Component {
   constructor(props) {
@@ -9,7 +11,6 @@ class BookCards extends React.Component {
 
     this.state = {
       books: [],
-      booksToBeLoaded: [],
       error: false,
     };
   }
@@ -17,44 +18,22 @@ class BookCards extends React.Component {
   static defaultProps() {
     return {
       books: [],
-      lazyLoadedBooks: []
     };
   }
 
   componentDidMount() {
-    if (Array.isArray(this.props.books) && this.props.books.length) {
-      this.loadBooks(this.props.books);
-    }
+    this.loadBooks(booksData.map(book => book.isbn));
   }
 
-  componentWillReceiveProps({ lazyLoadedBooks }) {
-    this.setState({ booksToBeLoaded: lazyLoadedBooks });
+  componentWillReceiveProps() {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.booksToBeLoaded.length !== this.state.booksToBeLoaded.length) {
-      this.loadBooks(this.state.booksToBeLoaded)
-        .then(() => this.setState({ booksToBeLoaded: [] }));
-    }
   }
 
-  loadBooks(books) {
-    const getBook = (isbn) => {
-      return fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`);
-    };
-
-    return Promise.all(books.map(book => getBook(book.isbn)))
-      .then(responses => {
-        const safeResponses = responses.filter(r => r.ok);
-
-        return Promise.all(safeResponses.map(r => r.json()));
-      })
-      .then(books => books.map(book => {
-        const isbn = Object.keys(book)[0];
-
-        return book[isbn];
-      }))
-      .then(books => this.setState({ books: [...this.state.books, ...books] }))
+  loadBooks(isbns) {
+    return getBooks(isbns)
+      .then(books => this.setState({ books }))
       .catch(e => this.setState({ error: true }));
   }
 
@@ -62,7 +41,7 @@ class BookCards extends React.Component {
     const { books, error } = this.state;
 
     if (error) {
-      return <div className="error">Something went totally bust</div>;
+      return <div className="error">Something went totally bust !!!</div>;
     }
 
     if (!books.filter(book => book).length) {
@@ -72,7 +51,7 @@ class BookCards extends React.Component {
     return (
       <div className="book-cards">
         {
-          books.map((book, i) => (
+          books.map(book => (
             <Book
               key={book.title}
               title={book.title}
@@ -80,6 +59,7 @@ class BookCards extends React.Component {
               pagesCount={book.number_of_pages}
               publishDate={book.publish_date}
               cover={book.cover.large}
+              isbn={book.identifiers.isbn_10}
             />
           ))
         }
@@ -88,19 +68,6 @@ class BookCards extends React.Component {
   }
 }
 
-BookCards.propTypes = {
-  books: array
-};
-
-/*
-{
-  title = "Untitled",
-  authors = [],
-  publishDate = "",
-  pagesCount = 0,
-  cover = "/placeholder.jpg"
-}
-*/
 function Book(props) {
   return (
     <div className="book-card">
@@ -115,6 +82,14 @@ function Book(props) {
     </div>
   );
 }
+
+Book.defaultProps = {
+  title: "Untitled",
+  authors: [],
+  publishDate: "",
+  pagesCount: 0,
+  cover: "/placeholder.jpg",
+};
 
 Book.propTypes = {
   title: string.isRequired,
