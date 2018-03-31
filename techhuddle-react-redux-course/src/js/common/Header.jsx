@@ -1,12 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Header(props) {
   return (
     <header className="site-header">
       <nav className="main-nav">
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Books</a></li>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/pesho">Books</Link></li>
         </ul>
       </nav>
 

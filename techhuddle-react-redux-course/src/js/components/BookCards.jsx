@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import { string, number, array, oneOf } from 'prop-types';
 import { getBook, getBooks } from '../services/books-service';
 import booksData from '../../assets/books-data.json';
@@ -25,15 +26,40 @@ class BookCards extends React.Component {
     this.loadBooks(booksData.map(book => book.isbn));
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
+    // const currentBooks = this.props.books;
+    // const nextBooks = nextProps.books;
+
+    // const newBooks = nextBooks.filter(book =>
+    //    !currentBooks.find(cb => cb.isbn === book.isbn)
+    // );
+
+    // this.loadBooks(newBooks.map(book => book.isbn), false);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // const currentBooks = this.props.books.map(book => JSON.stringify(book));
+    // const nextBooks = nextProps.books.map(book => JSON.stringify(book));
+
+    // if (JSON.stringify(currentBooks) === JSON.stringify(nextBooks)) {
+    //   return true;
+    // }
+
+    return true;
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // if (prevProps.books.length !== this.props.books.length) {
+    // }
   }
 
-  loadBooks(isbns) {
+  loadBooks(isbns, overwrite = true) {
     return getBooks(isbns)
-      .then(books => this.setState({ books }))
+      .then(books => {
+        this.setState({
+          books: overwrite ? books : [...this.state.books, ...books]
+        });
+      })
       .catch(e => this.setState({ error: true }));
   }
 
@@ -60,6 +86,7 @@ class BookCards extends React.Component {
               publishDate={book.publish_date}
               cover={book.cover.large}
               isbn={book.identifiers.isbn_10}
+              match={this.props.match}
             />
           ))
         }
@@ -71,7 +98,7 @@ class BookCards extends React.Component {
 function Book(props) {
   return (
     <div className="book-card">
-      <h2 className="title">{props.title}</h2>
+      <h2 className="title"><Link to={`${props.match.path}/${props.isbn}`}>{props.title}</Link></h2>
       <h3 className="authors-heading">Authors</h3>
       <ul>
         { props.authors.map(author => <li className="author">{author.name}</li>) }
