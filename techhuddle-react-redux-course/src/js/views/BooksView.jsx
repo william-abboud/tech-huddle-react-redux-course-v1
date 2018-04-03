@@ -33,16 +33,18 @@ class BooksView extends Component {
     };
 
     this.timeoutId = setTimeout(() => {
-      // this.setState({ books: [...booksData, newBook] });
-    }, 1000);
+      this.setState((prevState, prevProps) => ({
+        books: [...prevState.books, newBook]
+      }));
+    }, 5000);
   }
-
 
   render() {
     return (
       <section className="books-view">
         <h2>Books page</h2>
-        <Route path={this.props.match.path} component={BookCards} exact />
+        { /* <Route path={this.props.match.path} component={BookCards} exact /> */}
+        <BookCards books={this.state.books} />
         <Route path={`${this.props.match.path}/:isbn`} component={BookDetail} />
       </section>
     );

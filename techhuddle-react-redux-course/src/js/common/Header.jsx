@@ -7,13 +7,13 @@ function Header(props) {
       <nav className="main-nav">
         <ul>
           <li><Link to="/">Home</Link></li>
-          <li><Link to="/pesho">Books</Link></li>
+          <li><Link to="/books">Books</Link></li>
         </ul>
       </nav>
 
       <nav className="account-nav">
         <ul>
-          <li><a href="#">Register</a></li>
+          <li><Link to="/register">Register</Link></li>
         </ul>
       </nav>
     </header>

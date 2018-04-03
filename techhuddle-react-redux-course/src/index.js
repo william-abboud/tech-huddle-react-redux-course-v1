@@ -22,7 +22,8 @@ class App extends React.Component {
           <Header />
 
           <Route path="/" component={HomeView} exact />
-          <Route path="/pesho" component={BooksView} />
+          <Route path="/books" component={BooksView} />
+          <Route path="/register" component={RegisterView} />
         </div>
       </Router>
     );

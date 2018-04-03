@@ -23,34 +23,34 @@ class BookCards extends React.Component {
   }
 
   componentDidMount() {
-    this.loadBooks(booksData.map(book => book.isbn));
+    this.loadBooks(this.props.books.map(book => book.isbn));
   }
 
   componentWillReceiveProps(nextProps) {
-    // const currentBooks = this.props.books;
-    // const nextBooks = nextProps.books;
+    const currentBooks = this.props.books;
+    const nextBooks = nextProps.books;
 
-    // const newBooks = nextBooks.filter(book =>
-    //    !currentBooks.find(cb => cb.isbn === book.isbn)
-    // );
+    const newBooks = nextBooks.filter(book =>
+       !currentBooks.find(cb => cb.isbn === book.isbn)
+    );
 
-    // this.loadBooks(newBooks.map(book => book.isbn), false);
+    this.loadBooks(newBooks.map(book => book.isbn), false);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    // const currentBooks = this.props.books.map(book => JSON.stringify(book));
-    // const nextBooks = nextProps.books.map(book => JSON.stringify(book));
+    const currentBooks = this.props.books.map(book => JSON.stringify(book));
+    const nextBooks = nextProps.books.map(book => JSON.stringify(book));
 
-    // if (JSON.stringify(currentBooks) === JSON.stringify(nextBooks)) {
-    //   return true;
-    // }
+    const currentBooksInState = this.state.books.map(book => JSON.stringify(book));
+    const nextBooksInState = nextState.books.map(book => JSON.stringify(book));
+
+    if (JSON.stringify(currentBooks) === JSON.stringify(nextBooks) &&
+      JSON.stringify(currentBooksInState) === JSON.stringify(nextBooksInState)
+    ) {
+      return false;
+    }
 
     return true;
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    // if (prevProps.books.length !== this.props.books.length) {
-    // }
   }
 
   loadBooks(isbns, overwrite = true) {
@@ -86,7 +86,7 @@ class BookCards extends React.Component {
               publishDate={book.publish_date}
               cover={book.cover.large}
               isbn={book.identifiers.isbn_10}
-              match={this.props.match}
+              match={{ path: "books" }}
             />
           ))
         }

@@ -171,7 +171,7 @@ module.exports = env => {
       port: 4043,
       historyApiFallback: true,
     },
-    devtool: isProduction ? "source-map" : "cheap-module-source-map",
+    devtool: isProduction ? "source-map" : "eval-source-map", //"cheap-module-source-map",
     plugins
   };
 };
