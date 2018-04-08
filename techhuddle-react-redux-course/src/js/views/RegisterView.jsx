@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import withMediaQuery from '../hocs/media-query-hoc';
 
 class RegisterView extends Component {
   constructor(props) {
@@ -40,7 +41,9 @@ class RegisterView extends Component {
     const { firstName, lastName, country } = this.state;
 
     return (
-      <form className="register-view" onSubmit={this.onFormSubmit}>
+      <form className="register-view" onSubmit={this.onFormSubmit} style={{
+        "border": this.props.viewport === "mobile" ? "1px solid green" : "1px solid orange"
+      }}>
         <div>
           <label htmlFor="firstName">First name:</label>
           <input
@@ -83,6 +86,9 @@ class RegisterView extends Component {
   }
 }
 
+export default withMediaQuery(RegisterView);
+
+/*
 class RegisterViewUncontrolled extends Component {
   constructor(props) {
     super(props);
@@ -172,3 +178,4 @@ class RegisterViewUncontrolled extends Component {
 }
 
 export default RegisterViewUncontrolled;
+*/

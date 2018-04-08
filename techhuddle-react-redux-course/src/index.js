@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import HomeView from './js/views/HomeView';
 import BooksView from './js/views/BooksView';
 import RegisterView from './js/views/RegisterView';
+import StarWarsView from './js/views/StarWarsView';
 import Header from './js/common/Header';
 import BookCards from './js/components/BookCards';
 
@@ -24,6 +25,7 @@ class App extends React.Component {
           <Route path="/" component={HomeView} exact />
           <Route path="/books" component={BooksView} />
           <Route path="/register" component={RegisterView} />
+          <Route path="/star-wars" component={StarWarsView} />
         </div>
       </Router>
     );
