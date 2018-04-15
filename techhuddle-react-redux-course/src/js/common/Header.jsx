@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Avatar from '../components/Avatar';
+import { isLoggedIn } from '../utils/utils';
+import anonymous from '../../assets/images/anonymous-profile.jpg';
 
 function Header(props) {
   return (
@@ -13,9 +16,16 @@ function Header(props) {
       </nav>
 
       <nav className="account-nav">
-        <ul>
-          <li><Link to="/register">Register</Link></li>
-        </ul>
+        {
+          isLoggedIn
+            ?
+              <Avatar firstName="John" lastName="Doe" imageSrc={anonymous} />
+            :
+            <ul>
+              <li><Link to="/register">Register</Link></li>
+            </ul>
+        }
+
       </nav>
     </header>
   );

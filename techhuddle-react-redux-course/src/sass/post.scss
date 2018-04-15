@@ -1,0 +1,18 @@
+.post {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+
+  .avatar {
+    margin-right: 10px;
+  }
+
+  .details {
+    display: flex;
+    flex-flow: column;
+  }
+
+  .comment {
+    border: 1px solid #000;
+  }
+}

@@ -9,7 +9,9 @@ import BooksView from './js/views/BooksView';
 import RegisterView from './js/views/RegisterView';
 import StarWarsView from './js/views/StarWarsView';
 import Header from './js/common/Header';
-import BookCards from './js/components/BookCards';
+import Store from './js/store/store';
+
+window.Store = Store;
 
 class App extends React.Component {
   constructor(props) {
