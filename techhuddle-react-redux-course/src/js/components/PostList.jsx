@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Post from './Post';
+import { string, object } from 'prop-types';
+import { connect } from 'react-redux';
 
 class PostList extends Component {
   constructor(props) {
@@ -9,57 +11,41 @@ class PostList extends Component {
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
-      posts: [],
-      newPostText: ""
+      text: "",
+      user: ""
     };
   }
 
   addPost(e) {
     e.preventDefault();
 
-    const addPostAction = {
-      type: "ADD_POST",
-      post: {
-        id: 4,
-        user: "petar",
-        text: this.state.newPostText
-      }
-    };
-
-    window.Store.dispatch(addPostAction);
-
-    setTimeout(() => {
-      window.Store.dispatch({
-        type: "DELETE_POST"
-      });
-    }, 20000);
+    this.props.addPostToState({
+      user: this.state.user,
+      text: this.state.text,
+      id: 88
+    });
   }
 
   handleChange({ target }) {
     this.setState({
-      newPostText: target.value
+      [target.id]: target.value
     });
   }
 
   componentDidMount() {
-    window.Store.subscribe(() => {
-      const newPosts = window.Store.getState().posts;
-
-      this.setState({ posts: newPosts });
-    });
-
-    const { posts } = window.Store.getState();
-
-    this.setState({ posts });
+    this.setState({ theme: this.context.theme });
   }
 
   render() {
+    const { user, text, theme} = this.state;
+
     return (
-      <div className="post-list">
-        { this.state.posts.map(post => <Post {...post} key={post.text} />) }
+      <div className={`${theme} post-list`}>
+        { this.props.posts.map(post => <Post {...post} key={post.text} />) }
 
         <form onSubmit={this.addPost}>
-          <input type="text" onChange={this.handleChange} value={this.state.newPostText} />
+          <input type="text" id="text" onChange={this.handleChange} value={text} />
+          <input type="text" id="user" onChange={this.handleChange} value={user} />
           <button>Add Post</button>
         </form>
       </div>
@@ -67,4 +53,26 @@ class PostList extends Component {
   }
 }
 
-export default PostList;
+PostList.contextTypes = {
+  theme: string,
+  store: object,
+};
+
+function mapStateToProps({ posts }) {
+  return { posts };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addPostToState: post => {
+      const addPostAction = {
+        type: "ADD_POST",
+        post
+      };
+
+      dispatch(addPostAction);
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostList);
