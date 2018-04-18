@@ -10,7 +10,7 @@ class Lyrics extends Component {
   componentDidMount() {
     setTimeout(() => {
       const container = this.container;
-      let currentTop = container.scrollY;
+      let currentTop = container.scrollTop;
 
       function foo() {
         container.scroll({
