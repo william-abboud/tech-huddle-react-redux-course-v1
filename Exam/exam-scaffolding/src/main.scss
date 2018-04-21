@@ -1,0 +1,22 @@
+@import '~bootstrap/dist/css/bootstrap.css';
+@import './sass/header.scss';
+@import './sass/sidebar.scss';
+@import './sass/song.scss';
+
+@font-face {
+  font-family: 'Montserrat-regular';
+  src: url('./assets/fonts/montserrat/Montserrat-Regular.woff2') format('woff2'),
+    url('./assets/fonts/montserrat/Montserrat-Regular.woff') format('woff');
+}
+
+html,
+body,
+#root,
+#root > div {
+  height: 100%;
+  font-family: "Montserrat-regular", sans-serif, Arial;
+}
+
+.main-content-wrapper {
+  min-height: 100%;
+}
