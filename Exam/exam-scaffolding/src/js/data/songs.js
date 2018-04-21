@@ -38,7 +38,7 @@ const songs = [
       image: theweeknd,
       rank: 1,
       id: 5
-    },
+    }
 ];
 
 export default songs;
